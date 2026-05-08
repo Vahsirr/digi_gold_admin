@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Colors - High-Contrast Jewelry Palette */
+  --primary: #064E3B; /* Imperial Emerald */
+  --primary-dark: #042F24;
+  
+  --accent: #D4AF37;   /* Metallic Gold */
+  --accent-dark: #B8860B;
+  
+  --bg-main: #F1F5F9; /* Cool Grey Background (for contrast) */
+  --bg-card: #FFFFFF;
+  
+  --text-main: #0F172A;
+  --text-dim: #475569;
+  --text-light: #94A3B8;
+  
+  /* The "Black Edges" - Architectural Borders */
+  --border-sharp: #1E293B; /* Dark Charcoal Border */
+  --border-soft: #E2E8F0;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+  /* Layout */
+  --sidebar-width: 280px;
+  --header-height: 80px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 32px;
+
+  /* Typography */
+  --font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none !important;
+  text-decoration: none !important;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Definition Upgrade */
+.card-defined {
+    border: 1.5px solid var(--border-sharp) !important;
+    background: #FFFFFF !important;
+    box-shadow: 6px 6px 0px rgba(30, 41, 59, 0.05);
+}
+
+button {
+  transition: all 0.2s ease;
+}
+
+button:active {
+    transform: translateY(2px);
+}

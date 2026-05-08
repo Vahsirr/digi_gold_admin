@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --app-bg: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --border-light: rgba(0, 0, 0, 0.05);
+  --gold-primary: #D4AF37;
+  --gold-soft: #FAF3E0;
+  --emerald-accent: #10B981;
+  --text-main: #1E293B;
+  --text-muted: #64748B;
+  --shadow-premium: 0 10px 40px -10px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  background-color: var(--app-bg) !important;
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+}
+
+.dv2-container {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 2.5rem 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Header Alignment */
+.dv2-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.dv2-title-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dv2-title {
+  font-size: 2.5rem;
+  font-weight: 850;
+  color: var(--text-main);
+  margin: 0;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+
+.dv2-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.dv2-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Grid Alignment */
+.dv2-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(min-content, max-content);
+  gap: 1.5rem;
+}
+
+.dv2-col-span-2 { grid-column: span 2; }
+.dv2-row-span-2 { grid-row: span 2; }
+
+/* Stat Cards Alignment */
+.dv2-stat-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 28px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  box-shadow: var(--shadow-premium);
+}
+
+.dv2-stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.dv2-stat-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 750;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.dv2-stat-body {
+  margin-top: 1.5rem;
+}
+
+.dv2-stat-body h2 {
+  font-size: 2.8rem;
+  font-weight: 850;
+  color: var(--text-main);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+
+.dv2-stat-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dv2-badge {
+  background: #ECFDF5;
+  color: var(--emerald-accent);
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Standard Cards Alignment */
+.dv2-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 28px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-premium);
+  display: flex;
+  flex-direction: column;
+}
+
+.dv2-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dv2-card-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+/* List Items Alignment */
+.dv2-pl-item {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  background: #F8FAFC;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.dv2-pl-item:last-child { margin-bottom: 0; }
+
+.dv2-pl-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dv2-pl-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Team/Audit Item Alignment */
+.dv2-team-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  background: #F8FAFC;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+}
+
+.dv2-flex-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dv2-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--gold-soft);
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 850;
+  flex-shrink: 0;
+}
+
+/* Status Alignment */
+.dv2-status-pill {
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Buttons Alignment */
+.dv2-btn-primary {
+  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dv2-btn-secondary {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  padding: 0.8rem 1.8rem;
+  border-radius: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Chart Center Alignment */
+.dv2-chart-container {
+  width: 100%;
+  height: 250px;
+  margin-top: 1rem;
+}
+
+/* Progress Circle Center Alignment */
+.dv2-progress-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.dv2-progress-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 18px solid var(--gold-primary);
+  border-right-color: #F1F5F9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .dv2-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .dv2-grid { grid-template-columns: 1fr; }
+  .dv2-col-span-2 { grid-column: span 1; }
+  .dv2-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+}
