@@ -35,14 +35,8 @@ export const fetchMetalPrices = () => api.get('/admin/metal-prices');
 export const updateMetalPrices = (data) => api.post('/admin/metal-prices', data);
 export const fetchCarouselImages = () => api.get('/admin/carousel');
 export const fetchCarouselImageId = (id) => api.get(`/admin/carousel/${id}`);
-export const uploadCarouselImage = (file, title) => {
-  const formData = new FormData();
-  formData.append('image', file);
-  formData.append('title', title);
-  return api.post('/admin/carousel', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
-};
+export const uploadCarouselImage = (data) =>
+  api.post('/admin/carousel', data);
 export const deleteCarouselImage = (id) => api.delete(`/admin/carousel/${id}`);
 export const updateCarouselImage = (id, data) => api.patch(`/admin/carousel/${id}`, data);
 export default api;
