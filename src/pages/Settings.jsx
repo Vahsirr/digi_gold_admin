@@ -29,10 +29,10 @@ const getToken = () => localStorage.getItem('adminToken');
 
 const CarouselManager = () => {
   const [images, setImages] = useState([]);
-  const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
+  const [imageTitle, setImageTitle] = useState('');
   const [loading, setLoading] = useState(false);
   const [fetched, setFetched] = useState(false);
-  const fileInputRef = useRef(null);
 
   const fetchImages = async () => {
     setLoading(true);
@@ -69,25 +69,28 @@ const CarouselManager = () => {
     loadImages();
   }, []);
 
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('title', file.name.replace(/\.[^.]+$/, ''));
-    formData.append('order', images.length);
+  const handleAddImage = async () => {
+    if (!imageUrl.trim()) {
+      alert('Please enter an image URL');
+      return;
+    }
+
     try {
-      const res = await uploadCarouselImage(file, file.name.replace(/\.[^.]+$/, ''));
+      const res = await uploadCarouselImage({
+        imageUrl,
+        title: imageTitle || 'Carousel Image',
+        order: images.length,
+        isActive: true,
+      });
+
       if (res.data.success) {
         setImages(prev => [...prev, res.data.data]);
+        setImageUrl('');
+        setImageTitle('');
       }
-      else alert('Upload failed: ' + res.data.message);
-    } catch (e) {
-      alert('Upload error');
-    } finally {
-      setUploading(false);
-      e.target.value = '';
+    } catch (error) {
+      console.error(error);
+      alert('Failed to add image');
     }
   };
 
@@ -109,43 +112,43 @@ const CarouselManager = () => {
   };
 
   const shiftOrder = async (id, direction) => {
-  const sorted = [...images].sort((a, b) => a.order - b.order);
+    const sorted = [...images].sort((a, b) => a.order - b.order);
 
-  const idx = sorted.findIndex(img => img._id === id);
-  const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    const idx = sorted.findIndex(img => img._id === id);
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
 
-  if (swapIdx < 0 || swapIdx >= sorted.length) return;
+    if (swapIdx < 0 || swapIdx >= sorted.length) return;
 
-  const a = sorted[idx];
-  const b = sorted[swapIdx];
+    const a = sorted[idx];
+    const b = sorted[swapIdx];
 
-  const newOrderA = b.order;
-  const newOrderB = a.order;
+    const newOrderA = b.order;
+    const newOrderB = a.order;
 
-  try {
-    await Promise.all([
-      updateCarouselImage(a._id, { order: newOrderA }),
-      updateCarouselImage(b._id, { order: newOrderB }),
-    ]);
+    try {
+      await Promise.all([
+        updateCarouselImage(a._id, { order: newOrderA }),
+        updateCarouselImage(b._id, { order: newOrderB }),
+      ]);
 
-    setImages(prev =>
-      prev.map(img => {
-        if (img._id === a._id) {
-          return { ...img, order: newOrderA };
-        }
+      setImages(prev =>
+        prev.map(img => {
+          if (img._id === a._id) {
+            return { ...img, order: newOrderA };
+          }
 
-        if (img._id === b._id) {
-          return { ...img, order: newOrderB };
-        }
+          if (img._id === b._id) {
+            return { ...img, order: newOrderB };
+          }
 
-        return img;
-      })
-    );
-  } catch (error) {
-    console.error('Failed to update image order:', error);
-    alert('Failed to update image order');
-  }
-};
+          return img;
+        })
+      );
+    } catch (error) {
+      console.error('Failed to update image order:', error);
+      alert('Failed to update image order');
+    }
+  };
 
   const sorted = [...images].sort((a, b) => a.order - b.order);
 
@@ -167,23 +170,47 @@ const CarouselManager = () => {
           >
             <RefreshCw size={15} /> Refresh
           </button>
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={uploading}
-            className="dv2-btn-primary"
-            style={{ fontSize: 13, padding: '0.6rem 1.2rem' }}
+          <div
+            style={{
+              display: 'flex',
+              gap: '10px',
+              alignItems: 'center',
+              flexWrap: 'wrap'
+            }}
           >
-            {uploading
-              ? <><RefreshCw size={15} className="spinning" /> Uploading...</>
-              : <><Upload size={15} /> Upload Image</>}
-          </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleUpload}
-            style={{ display: 'none' }}
-          />
+            <input
+              type="text"
+              placeholder="Image URL"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              style={{
+                padding: '10px',
+                border: '1px solid #E2E8F0',
+                borderRadius: '10px',
+                minWidth: '300px'
+              }}
+            />
+
+            <input
+              type="text"
+              placeholder="Title"
+              value={imageTitle}
+              onChange={(e) => setImageTitle(e.target.value)}
+              style={{
+                padding: '10px',
+                border: '1px solid #E2E8F0',
+                borderRadius: '10px'
+              }}
+            />
+
+            <button
+              onClick={handleAddImage}
+              className="dv2-btn-primary"
+            >
+              <Plus size={16} />
+              Add Image
+            </button>
+          </div>
         </div>
       </div>
 
@@ -195,18 +222,17 @@ const CarouselManager = () => {
         </div>
       ) : sorted.length === 0 ? (
         <div
-          onClick={() => fileInputRef.current?.click()}
           style={{
-            textAlign: 'center', padding: '4rem', background: '#F8FAFC',
-            borderRadius: 20, border: '2px dashed #E2E8F0', cursor: 'pointer',
-            transition: 'border-color 0.2s',
+            textAlign: 'center',
+            padding: '4rem',
+            background: '#F8FAFC',
+            borderRadius: 20,
+            border: '2px dashed #E2E8F0',
           }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = '#D4AF37'}
-          onMouseLeave={e => e.currentTarget.style.borderColor = '#E2E8F0'}
         >
-          <Upload size={40} color="#CBD5E1" style={{ marginBottom: 12 }} />
+          <Image size={40} color="#CBD5E1" style={{ marginBottom: 12 }} />
           <p style={{ color: '#94a3b8', fontSize: 15, margin: 0 }}>
-            No carousel images yet. Click to upload your first one.
+            No carousel images yet. Add an image URL above.
           </p>
         </div>
       ) : (
@@ -234,10 +260,13 @@ const CarouselManager = () => {
               {/* Image preview */}
               <div style={{ position: 'relative', height: 150, background: '#F1F5F9' }}>
                 <img
-                  src={`${API_URL.replace('/api', '')}${img.imageUrl}`}
-                  alt={img.title || `Slide ${idx + 1}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  onError={e => { e.target.style.display = 'none'; }}
+                  src={img.imageUrl}
+                  alt={img.title}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
                 />
                 {/* Hidden overlay */}
                 {!img.isActive && (
